@@ -1,0 +1,23 @@
+{
+  "name": "githubmines",
+  "version": "2.0",
+  "description": "This extraction tool allows you to perform a search on GitHub and bypass some limits established by GitHub GraphQL API. It retrieves information about repositories based on the provided search query, date range, and other parameters.",
+  "author": "Sègla Jean-Luc Kpodjedo",
+  "contributors": [
+    "Óscar Poblete",
+    "Arpit Sharma "
+  ],
+  "license": "MIT",
+  "private": true,
+  "engines": {
+    "node": "8.4.0",
+    "npm": "5.0.0"
+  },
+  "dependencies": {
+    "csv-writer": "^1.6.0",
+    "fs": "^0.0.1-security",
+    "graphql": "^16.7.1",
+    "graphql-request": "^1.8.2",
+    "minimist": "^1.2.8"
+  }
+}
