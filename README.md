@@ -1,6 +1,7 @@
-# GitHubMines
+# GitHubMiner
 
-GitHubMines is an extraction tool that allows you to perform a search on GitHub and bypass some limits established by GitHub GraphQL API. It retrieves information about repositories based on the provided search query, date range, and other parameters.
+The GitHub APIs allow software professionals and researchers to explore and gather information on GitHub projects. However, they come with a number of limitations -- token rate limits, query limits (no more  than 1000 results) etc. -- that make them hard to use for large scale mining. GitHubMiner is a tool, built around the GitHub GraphQL API, intended to ease the extraction of data from GitHub, starting with project data. It allows you to easily retrieve information about repositories based on the provided search query, date range, and other parameters. 
+Additionally, it provides a simple heuristic to retrieve topics associated to a repository, based on a dictionary which by default is a set of tags taken from Stack Overflow.
 
 ## Prerequisites
 
@@ -24,15 +25,14 @@ To fully understand how to structure queries and make the best use of the availa
 
 To use the script, follow these steps:
 
-1. Replace the tokens in the **tokens**  array with your own GitHub personal access tokens. These tokens are used to authenticate API requests and rotate between them to avoid rate limits.
-2. Set the desired **batchSize** to control the number of results fetched in each API request.
-3. Adjust the delay time in the **fetchResultsBatch** function if necessary to avoid rate limits between batches. Maximum is 100.
+1. Replace the tokens in the **tokens**  array with your own GitHub personal access tokens. These tokens are used to authenticate API requests; the tool rotates between them to avoid rate limits. The idea here is to pool tokens from different developers working on your project.
+2. Set the desired **batchSize** to control the number of results fetched in each API request. The GitHub GraphQL API sometimes returns errors when the batch size is high. That is why our batch size is 10 by default but you can try to change it to higher numbers (max 100) 
+3. Adjust the delay time in the **fetchResultsBatch** function if necessary to avoid rate limits between batches.
 4. Modify the **writeFiles** function to format the data according to your desired output.
 5. Replace the **dictionary.json** file with your own dictionary, if desired.
 6. Run the script with the following command:
 
-`node index.js --query "your search query" --start "start date" --end "end date" --date "date type" --filename "output filename"`
-
+`node index.js --query "your search query" --start "start date" --end "end date" --date "date type" --filename "output filename" --batchsize 10`
 
 ## Placeholders
 
@@ -41,6 +41,7 @@ To use the script, follow these steps:
 - **end**: The end date of the search range in YYYY-MM-DD format. By default, it is set to the current date. 
 - **date**: The type of date field to search on. It can be "created", "pushed", or "updated". By default, it is set to "created".
 - **filename**: The base filename for the output JSON and CSV files. By default, it is set to "results".
+- **batchsize**: The number of results from a single query. By default, it is set to 10.
 
   
 ## Dictionary
