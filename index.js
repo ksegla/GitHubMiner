@@ -5,9 +5,10 @@ const fileName = argv.filename || "results";
 const csv = require("csv-writer").createObjectCsvWriter;
 
 const MAXRESULTS = 1000; // This is the maximum number of results GitHub can provide from a query. If the query returns more than this number, the date range will be split into smaller batches.
-//const REQUEST_TIMEOUT = 30000; // Set the request timeout in milliseconds
+const REQUEST_TIMEOUT = 0; // Set the request timeout in milliseconds
 
 // Add as many tokens as needed, considering the amount of data
+
 const tokens = [
   "PERSONAL_ACCESS_TOKEN_1",
   "PERSONAL_ACCESS_TOKEN_2",
@@ -57,7 +58,7 @@ async function fetchResultsBatch(searchQuery, currentDate, cursor = null, result
 
     if (pageInfo.hasNextPage) {
       // Delay between batches to avoid rate limits
-      //await new Promise((resolve) => setTimeout(resolve, REQUEST_TIMEOUT)); // Adjust the delay time as needed
+      await new Promise((resolve) => setTimeout(resolve, REQUEST_TIMEOUT)); // Adjust the delay time as needed
       return await fetchResultsBatch(searchQuery, currentDate, pageInfo.endCursor, results);
     } else {
       return results;
@@ -336,8 +337,8 @@ const rateLimitQuery = `query {
 
 // Create arguments and set defaults
 const now = new Date().toISOString().split("T")[0];
-const searchQuery = argv.query || "mobile AND (android OR ios)";
-const startDate = argv.start || "2013-01-01";
+const searchQuery = argv.query || "";
+const startDate = argv.start || "2008-01-01";
 const endDate = argv.end || now;
 const dateType = argv.date || "created";
 
